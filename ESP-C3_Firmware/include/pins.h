@@ -10,7 +10,7 @@
 #define LCD_GPIO_MOSI    6
 #define LCD_GPIO_CS      7
 #define LCD_GPIO_DC      8
-#define LCD_GPIO_RST     9
+#define LCD_GPIO_RST     9  
 #define LCD_GPIO_BL     -1
 
 #endif
