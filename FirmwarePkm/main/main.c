@@ -80,8 +80,26 @@ static const char *TAG_CAMERA = "CAMERA";
 static const char *TAG_MAIN   = "MAIN";
 
 
+#include "driver/uart.h"
+
+void host_c3_comm_init(void) {
+    uart_config_t uart_config = {
+        .baud_rate = 115200,
+        .data_bits = UART_DATA_8_BITS,
+        .parity    = UART_PARITY_DISABLE,
+        .stop_bits = UART_STOP_BITS_1,
+        .flow_ctrl = UART_HW_FLOWCTRL_DISABLE,
+        .source_clk = UART_SCLK_DEFAULT,
+    };
+    ESP_ERROR_CHECK(uart_driver_install(UART_NUM_1, 256, 0, 0, NULL, 0));
+    ESP_ERROR_CHECK(uart_param_config(UART_NUM_1, &uart_config));
+    ESP_ERROR_CHECK(uart_set_pin(UART_NUM_1, GPIO_NUM_4, GPIO_NUM_5, UART_PIN_NO_CHANGE, UART_PIN_NO_CHANGE));
+    ESP_LOGI("HOST_COMM", "UART1 to ESP32-C3 initialized (TX=4, RX=5)");
+}
+
 void app_main(void)
 {
+    host_c3_comm_init();
     ota_confirm_running_app();
     esp_err_t ret = nvs_flash_init();
     if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {

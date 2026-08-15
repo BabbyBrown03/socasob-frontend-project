@@ -30,8 +30,8 @@
 #define LCD_BITS_PER_PIXEL (16)
 #define LCD_BL_ON_LEVEL (1)
 
-#define LCD_H_RES 128
-#define LCD_V_RES 160
+#define LCD_H_RES 160
+#define LCD_V_RES 128
 
 esp_err_t lcd_spi_bus_init(void);
 esp_err_t lcd_init(void);

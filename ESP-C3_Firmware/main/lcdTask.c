@@ -47,7 +47,8 @@ esp_err_t lcd_init(void)
     ESP_GOTO_ON_ERROR(esp_lcd_panel_reset(lcd_panel), err, TAG_DISPLAY, "Panel reset failed");
     ESP_GOTO_ON_ERROR(esp_lcd_panel_init(lcd_panel), err, TAG_DISPLAY, "Panel init failed");
     ESP_GOTO_ON_ERROR(esp_lcd_panel_set_gap(lcd_panel, 2, 3), err, TAG_DISPLAY, "Set gap failed");
-    ESP_GOTO_ON_ERROR(esp_lcd_panel_invert_color(lcd_panel, true), err, TAG_DISPLAY, "Invert color failed");
+    ESP_GOTO_ON_ERROR(esp_lcd_panel_swap_xy(lcd_panel, true), err, TAG_DISPLAY, "Swap XY failed");
+    ESP_GOTO_ON_ERROR(esp_lcd_panel_mirror(lcd_panel, false, true), err, TAG_DISPLAY, "Mirror failed");
     ESP_GOTO_ON_ERROR(esp_lcd_panel_disp_on_off(lcd_panel, true), err, TAG_DISPLAY, "Turn on display failed");
     vTaskDelay(pdMS_TO_TICKS(500));
 
@@ -65,6 +66,8 @@ esp_err_t lcd_init(void)
             .buff_dma = true,
             .sw_rotate = false,
         }};
+
+    lvgl_port_add_disp(&disp_cfg);
 
     return ret;
 

@@ -1,4 +1,5 @@
 #include "wifiStreamTask.h"
+#include "driver/uart.h"
 
 // =============================================================================
 // === TCP Client (plain socket, length-prefix framing) ===
@@ -106,6 +107,17 @@ void vTaskTcpStream(void *pvParameters)
                 if (dur_ms > 60) {
                     ESP_LOGW(TAG_TCP, "Kirim %u bytes butuh %lld ms",
                              (unsigned)fb->len, dur_ms);
+                }
+
+                // Read eye status from TCP server (non-blocking)
+                char server_cmd;
+                int recv_len = recv(g_sock, &server_cmd, 1, MSG_DONTWAIT);
+                if (recv_len > 0) {
+                    ESP_LOGI(TAG_TCP, "Received eye state from server: %c", server_cmd);
+                    if (server_cmd == 'N' || server_cmd == 'F' || server_cmd == 'D') {
+                        // Forward to ESP32-C3
+                        uart_write_bytes(UART_NUM_1, &server_cmd, 1);
+                    }
                 }
             } else {
                 ESP_LOGW(TAG_TCP, "Gagal kirim (errno %d), reconnect...", errno);

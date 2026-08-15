@@ -20,7 +20,7 @@
 
 // === Konfigurasi server TCP (ganti IP sesuai server Anda) ===
 #define SERVER_HOST "10.45.173.156" // 192.168.1.21 atau 10.81.91.156
-#define SERVER_PORT 3001
+#define SERVER_PORT 3003
 #define RECONNECT_DELAY_MS 1000
 #define SOCKET_SEND_TIMEOUT_SEC 5
 #define HTTP_STACK_SIZE (8 * 1024)
