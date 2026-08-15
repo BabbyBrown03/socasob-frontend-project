@@ -1,4 +1,35 @@
 dependencies:
+  espressif/esp-serial-flasher:
+    component_hash: 6f5d6859ce5b4a2d1a9eb42fa50aa1101096cb775cfea54440aab209bcb17c53
+    dependencies:
+    - name: idf
+      require: private
+      version: '>=4.3'
+    - name: espressif/usb_host_cdc_acm
+      registry_url: https://components.espressif.com
+      require: private
+      rules:
+      - if: idf_version >=4.4
+      - if: target in [esp32s2, esp32s3, esp32p4]
+      version: ^2
+    - name: espressif/usb_host_ch34x_vcp
+      registry_url: https://components.espressif.com
+      require: private
+      rules:
+      - if: idf_version >=4.4
+      - if: target in [esp32s2, esp32s3, esp32p4]
+      version: ^2.2
+    - name: espressif/usb_host_cp210x_vcp
+      registry_url: https://components.espressif.com
+      require: private
+      rules:
+      - if: idf_version >=4.4
+      - if: target in [esp32s2, esp32s3, esp32p4]
+      version: ^2.2
+    source:
+      registry_url: https://components.espressif.com/
+      type: service
+    version: 1.11.0
   espressif/esp32-camera:
     component_hash: bc9c8a6b51df777a014fa295825b3de5069bc0300c317acff20c97cf4a10ac7d
     dependencies:
@@ -66,12 +97,13 @@ dependencies:
       type: service
     version: 1.0.1
 direct_dependencies:
+- espressif/esp-serial-flasher
 - espressif/esp32-camera
 - espressif/esp_lvgl_port
 - espressif/esp_websocket_client
 - idf
 - lvgl/lvgl
 - waveshare/esp_lcd_st7735
-manifest_hash: 6ecbfec97e333cdb4ef5024f1b90719f629dfcfa8c00c78e3faaa81c68496471
+manifest_hash: 26a4f54865b93ced1243b1574604845713a2164cbbfa917953a679e24fc9c52b
 target: esp32
 version: 3.0.0
